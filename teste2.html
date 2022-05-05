@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script type="text/javascript">
+function save()
+{
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var client = {name:name,email:email};
+    var clients = JSON.parse(localStorage.getItem("clients"));
+    if(clients == null)
+    {
+        clients = [];
+    }
+    clients.push(client);
+    localStorage.setItem("clients",JSON.stringify(clients));
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    load();
+}
+function load()
+{
+    var clients = JSON.parse(localStorage.getItem("clients"));
+    var html = "";
+    for(var i = 0; i < clients.length; i++)
+    {
+        html += "<tr><td>"+clients[i].name+"</td><td>"+clients[i].email+"</td></tr>";
+    }
+    document.getElementById("table").innerHTML = html;
+}
+</script>
+</head>
+<body onload="load()">
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="email" placeholder="Email">
+<button onclick="save()">Save</button>
+<table id="table">
+</table>
+</body>
+</html>
